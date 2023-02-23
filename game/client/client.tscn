@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtmdkadp7aods"]
+
+[ext_resource type="Script" path="res://game/client/client.gd" id="1_5do8e"]
+[ext_resource type="PackedScene" uid="uid://btcw1bacf0hrb" path="res://game/client/world.tscn" id="1_axuqk"]
+[ext_resource type="PackedScene" uid="uid://cjlqvteuu4arc" path="res://game/client/interface/interface.tscn" id="2_b7ni4"]
+
+[node name="client" type="Node"]
+script = ExtResource("1_5do8e")
+
+[node name="world" parent="." instance=ExtResource("1_axuqk")]
+
+[node name="canvas" type="CanvasLayer" parent="."]
+
+[node name="interface" parent="canvas" instance=ExtResource("2_b7ni4")]

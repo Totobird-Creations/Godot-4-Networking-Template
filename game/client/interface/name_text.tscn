@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://diesmyoi2n1e7"]
+
+[ext_resource type="Shader" path="res://game/client/interface/rarity.gdshader" id="1_3mb3j"]
+[ext_resource type="Script" path="res://game/client/interface/name_text.gd" id="2_evm7j"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7lnfy"]
+noise_type = 2
+fractal_type = 0
+cellular_distance_function = 2
+cellular_jitter = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vnf58"]
+seamless = true
+noise = SubResource("FastNoiseLite_7lnfy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gvuv1"]
+shader = ExtResource("1_3mb3j")
+shader_parameter/resolution = Vector2(279, 91)
+shader_parameter/rarity = 0
+shader_parameter/noise = SubResource("NoiseTexture2D_vnf58")
+
+[node name="name_text" type="SubViewportContainer"]
+material = SubResource("ShaderMaterial_gvuv1")
+offset_right = 279.0
+offset_bottom = 91.0
+script = ExtResource("2_evm7j")
+text = "Test Text"
+
+[node name="viewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(279, 91)
+render_target_update_mode = 4
+
+[node name="text" type="Label" parent="viewport"]
+offset_right = 279.0
+offset_bottom = 91.0
+theme_override_font_sizes/font_size = 64
+text = "Test Text"
+
+[connection signal="item_rect_changed" from="." to="." method="update_rect"]

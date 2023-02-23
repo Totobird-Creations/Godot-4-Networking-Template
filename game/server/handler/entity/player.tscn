@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://hws5tcnkck5j"]
+
+[ext_resource type="Script" path="res://game/server/handler/entity/player.gd" id="1_mgqu1"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_m6af6"]
+
+[node name="player" type="Node3D"]
+script = ExtResource("1_mgqu1")
+
+[node name="body" type="CharacterBody3D" parent="."]
+axis_lock_linear_y = true
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+
+[node name="shape" type="CollisionShape3D" parent="body"]
+shape = SubResource("SphereShape3D_m6af6")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://dajn6ipwyc0e3"]
+
+[ext_resource type="Script" path="res://game/server/server.gd" id="1_omotn"]
+[ext_resource type="Script" path="res://game/server/entity_manager.gd" id="2_0172u"]
+
+[node name="server" type="Node3D"]
+script = ExtResource("1_omotn")
+
+[node name="entity_manager" type="Node3D" parent="."]
+script = ExtResource("2_0172u")
+
+[node name="connection_timeout" type="Timer" parent="."]
+process_mode = 3
+wait_time = 5.0
+one_shot = true
+
+[node name="approval_timeout" type="Node" parent="."]
+
+[node name="kick_timeout" type="Node" parent="."]
+
+[connection signal="child_entered_tree" from="entity_manager" to="entity_manager" method="spawn_entity"]
+[connection signal="child_exiting_tree" from="entity_manager" to="entity_manager" method="despawn_entity"]

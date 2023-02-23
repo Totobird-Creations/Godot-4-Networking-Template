@@ -1,0 +1,161 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwgh77v6hva56"]
+
+[ext_resource type="Script" path="res://menu/menu.gd" id="1_j5crm"]
+
+[node name="menu" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 64
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 64
+theme_override_constants/margin_bottom = 64
+script = ExtResource("1_j5crm")
+
+[node name="hbox" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 64
+
+[node name="join" type="Control" parent="hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="background" type="ColorRect" parent="hbox/join"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="margin" type="MarginContainer" parent="hbox/join"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="vbox" type="VBoxContainer" parent="hbox/join/margin"]
+layout_mode = 2
+alignment = 1
+
+[node name="title" type="Label" parent="hbox/join/margin/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Join"
+
+[node name="address" type="LineEdit" parent="hbox/join/margin/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "127.0.0.1"
+placeholder_text = "Address"
+virtual_keyboard_type = 2
+
+[node name="port" type="LineEdit" parent="hbox/join/margin/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "38441"
+placeholder_text = "Port"
+virtual_keyboard_type = 2
+
+[node name="start" type="Button" parent="hbox/join/margin/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Start"
+
+[node name="host" type="Control" parent="hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="background" type="ColorRect" parent="hbox/host"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="margin" type="MarginContainer" parent="hbox/host"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="vbox" type="VBoxContainer" parent="hbox/host/margin"]
+layout_mode = 2
+alignment = 1
+
+[node name="title" type="Label" parent="hbox/host/margin/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Host"
+
+[node name="port" type="LineEdit" parent="hbox/host/margin/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "38441"
+placeholder_text = "Port"
+virtual_keyboard_type = 2
+
+[node name="start" type="Button" parent="hbox/host/margin/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Start"
+
+[node name="singleplayer" type="Control" parent="hbox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="background" type="ColorRect" parent="hbox/singleplayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.25, 0.25, 0.25, 1)
+
+[node name="margin" type="MarginContainer" parent="hbox/singleplayer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="vbox" type="VBoxContainer" parent="hbox/singleplayer/margin"]
+layout_mode = 2
+alignment = 1
+
+[node name="title" type="Label" parent="hbox/singleplayer/margin/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Singleplayer"
+
+[node name="start" type="Button" parent="hbox/singleplayer/margin/vbox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Start"
+
+[connection signal="pressed" from="hbox/join/margin/vbox/start" to="." method="join"]
+[connection signal="pressed" from="hbox/host/margin/vbox/start" to="." method="host"]
+[connection signal="pressed" from="hbox/singleplayer/margin/vbox/start" to="." method="singleplayer"]

@@ -1,0 +1,94 @@
+[gd_scene load_steps=14 format=3 uid="uid://btcw1bacf0hrb"]
+
+[ext_resource type="Script" path="res://game/client/world.gd" id="1_5sljh"]
+[ext_resource type="Shader" path="res://game/client/environment/stars.gdshader" id="3_6ulqx"]
+[ext_resource type="Script" path="res://game/client/camera.gd" id="4_80bae"]
+[ext_resource type="Script" path="res://game/client/entity_manager.gd" id="4_vine7"]
+
+[sub_resource type="Environment" id="Environment_mxcru"]
+volumetric_fog_density = 0.0
+volumetric_fog_albedo = Color(0, 0, 0, 1)
+volumetric_fog_length = 256.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_v80f3"]
+size = Vector2(100, 100)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vlltc"]
+noise_type = 2
+frequency = 1.0
+fractal_type = 0
+cellular_distance_function = 1
+cellular_jitter = 1.0
+cellular_return_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_co1d7"]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource("FastNoiseLite_vlltc")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2tyh2"]
+noise_type = 2
+seed = 1
+frequency = 1.0
+fractal_type = 0
+cellular_distance_function = 1
+cellular_jitter = 1.0
+cellular_return_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_6lry4"]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource("FastNoiseLite_2tyh2")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ynr7v"]
+noise_type = 2
+seed = 2
+frequency = 1.0
+fractal_type = 0
+cellular_distance_function = 1
+cellular_jitter = 1.0
+cellular_return_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pceda"]
+width = 1024
+height = 1024
+seamless = true
+noise = SubResource("FastNoiseLite_ynr7v")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_shpoe"]
+render_priority = 0
+shader = ExtResource("3_6ulqx")
+shader_parameter/star_count = 1.0
+shader_parameter/star_noise_0 = SubResource("NoiseTexture2D_co1d7")
+shader_parameter/star_noise_1 = SubResource("NoiseTexture2D_6lry4")
+shader_parameter/star_noise_2 = SubResource("NoiseTexture2D_pceda")
+
+[node name="world" type="Node3D"]
+script = ExtResource("1_5sljh")
+
+[node name="environment" type="Node3D" parent="."]
+
+[node name="environment" type="WorldEnvironment" parent="environment"]
+environment = SubResource("Environment_mxcru")
+
+[node name="light" type="DirectionalLight3D" parent="environment"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 10, 0)
+directional_shadow_mode = 0
+sky_mode = 1
+
+[node name="stars" type="MeshInstance3D" parent="environment"]
+mesh = SubResource("PlaneMesh_v80f3")
+surface_material_override/0 = SubResource("ShaderMaterial_shpoe")
+
+[node name="camera" type="Node3D" parent="environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 15, 0)
+script = ExtResource("4_80bae")
+
+[node name="camera" type="Camera3D" parent="environment/camera"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+current = true
+
+[node name="entity_manager" type="Node3D" parent="."]
+script = ExtResource("4_vine7")

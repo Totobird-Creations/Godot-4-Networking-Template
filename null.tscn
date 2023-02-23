@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bj0ux2qd3vpqf"]
+
+[ext_resource type="Script" path="res://null.gd" id="1_1bvmu"]
+
+[node name="null" type="Node"]
+script = ExtResource("1_1bvmu")
