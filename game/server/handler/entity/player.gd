@@ -20,12 +20,17 @@ func send_data_to(target_peer_id : int) -> Dictionary:
 	var data := {};
 	
 	if (self.get_server().is_host()):
-		data = {position = body.position, input = self.input};
+		data = {
+			position = DeliveryMethod.new(body.position).reliable(false),
+			input    = DeliveryMethod.new(self.input).only_send_on_change(true)
+		};
 		if (target_peer_id == self.owner_peer):
-			data["owner_peer"] = self.owner_peer;
+			data["owner_peer"] = DeliveryMethod.new(self.owner_peer).only_send_on_change(true);
 
 	elif (target_peer_id == 1 && self.get_server().get_peer_id() == self.owner_peer):
-		data = {input = self.input};
+		data = {
+			input = DeliveryMethod.new(self.input).only_send_on_change(true)
+		};
 
 	return data;
 

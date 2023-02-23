@@ -217,7 +217,7 @@ func _spawn_entity(id : int, type : String, data : Dictionary) -> void:
 		elif (typeof(handler) == TYPE_OBJECT):
 			handler.free();
 
-# Joiner
+# Host, Joiner
 @rpc("any_peer")
 func _update_entity(id : int, data : Dictionary) -> void:
 	var peer_id := self.multiplayer.get_remote_sender_id();
@@ -225,6 +225,11 @@ func _update_entity(id : int, data : Dictionary) -> void:
 		self.get_entity_manager()._update_entity_id_from_server(id, data);
 	elif (self.is_host()):
 		self.get_entity_manager()._update_entity_id_from_client(peer_id, id, data);
+
+# Host, Joiner
+@rpc("any_peer", "unreliable")
+func _update_entity_unreliable(id : int, data : Dictionary) -> void:
+	self._update_entity(id, data);
 
 # Joiner
 @rpc

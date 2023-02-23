@@ -95,17 +95,29 @@ func _process(_delta : float) -> void:
 						entity._enable_client_handler();
 					elif (peer_id in self.get_server().multiplayer.get_peers()):
 						var data := entity.server_handler.send_data_to(peer_id) as Dictionary;
+						for key in data:
+							if (data[key] is DeliveryMethod):
+								data[key] = data[key]._value;
+						entity._watcher_data[peer_id] = data;
 						self.get_server()._spawn_entity.rpc_id(peer_id, entity.id, entity._server_handler_path, data);
 				# Remove watcher.
 				elif (! sync && peer_id in entity._watchers):
+					entity._watcher_data.erase(peer_id);
 					if (peer_id == 1 || peer_id == 0):
 						entity._disable_client_handler();
 					elif (peer_id in self.get_server().multiplayer.get_peers()):
 						self.get_server()._despawn_entity.rpc_id(peer_id, entity.id);
 				elif (sync && peer_id != 1 && peer_id != 0):
 					if (peer_id in self.get_server().multiplayer.get_peers()):
-						var data := entity.server_handler.send_data_to(peer_id) as Dictionary
-						self.get_server()._update_entity.rpc_id(peer_id, entity.id, data);
+						var data            := entity.server_handler.send_data_to(peer_id) as Dictionary;
+						var data_reliable   := {};
+						var data_unreliable := {};
+						DeliveryMethod.split_data(peer_id, entity, data, data_reliable, data_unreliable);
+						if (len(data_reliable.keys()) > 0):
+							self.get_server()._update_entity.rpc_id(peer_id, entity.id, data_reliable);
+						if (len(data_unreliable.keys()) > 0):
+							print(data_unreliable);
+							self.get_server()._update_entity_unreliable.rpc_id(peer_id, entity.id, data_unreliable);
 				if (sync):
 					var __ = next_watched.append(peer_id);
 				elif (entity._queue_despawn):
@@ -123,5 +135,11 @@ func _process(_delta : float) -> void:
 				entity.queue_free();
 				var __ = self._entities.erase(entity.id);
 			else:
-				var data := entity.server_handler.send_data_to(1) as Dictionary;
-				self.get_server()._update_entity.rpc_id(1, entity.id, data);
+				var data            := entity.server_handler.send_data_to(1) as Dictionary;
+				var data_reliable   := {};
+				var data_unreliable := {};
+				DeliveryMethod.split_data(1, entity, data, data_reliable, data_unreliable);
+				if (len(data_reliable.keys()) > 0):
+					self.get_server()._update_entity.rpc_id(1, entity.id, data_reliable);
+				if (len(data_unreliable.keys()) > 0):
+					self.get_server()._update_entity_unreliable.rpc_id(1, entity.id, data_unreliable);

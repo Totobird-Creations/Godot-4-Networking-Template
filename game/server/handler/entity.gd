@@ -23,6 +23,10 @@ func sync_allowed_with(_target_peer_id : int) -> bool:
 	return true;
 
 # OVERRIDE
+# Return a `Dictionary` of values to be sent to the target_peer_id.
+# If the value is not a `DeliveryMethod`, it will be mapped to the default method.
+# The `received_data_from` function will be called twice: Once for unreliable (if it arrives) and once for reliable.
+# Even if the delivery method is set to be unreliable, it will be sent reliably when the spawn signal is sent to the client.
 func send_data_to(_target_peer_id : int) -> Dictionary:
 	return {};
 

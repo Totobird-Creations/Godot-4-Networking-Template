@@ -12,6 +12,10 @@ var _server_handler_path : String;
 # Connected players who currently have this entity loaded.
 @warning_ignore("unused_private_class_variable")
 var _watchers : PackedInt32Array = [];
+# Data that connected players have on this entity.
+# Dictionary[int, Dictionary[Variant, Variant]]
+@warning_ignore("unused_private_class_variable")
+var _watcher_data : Dictionary = {};
 
 # Is from server.
 @warning_ignore("unused_private_class_variable")
