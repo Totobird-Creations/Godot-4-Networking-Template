@@ -116,7 +116,6 @@ func _process(_delta : float) -> void:
 						if (len(data_reliable.keys()) > 0):
 							self.get_server()._update_entity.rpc_id(peer_id, entity.id, data_reliable);
 						if (len(data_unreliable.keys()) > 0):
-							print(data_unreliable);
 							self.get_server()._update_entity_unreliable.rpc_id(peer_id, entity.id, data_unreliable);
 				if (sync):
 					var __ = next_watched.append(peer_id);
