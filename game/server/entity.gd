@@ -27,10 +27,8 @@ var _queue_despawn : bool = false;
 
 
 func _init(handler : ServerEntityHandler) -> void:
-	self.server_handler = handler;
-	var path := (self.server_handler.scene_file_path as String).lstrip("res://game/server/handler/entity").lstrip("/").split(".");
-	path.remove_at(len(path) - 1);
-	self._server_handler_path = ".".join(path);
+	self.server_handler       = handler;
+	self._server_handler_path = self._server_handler_path = (self.server_handler.scene_file_path as String).trim_prefix("res://game/server/handler/entity").lstrip("/").trim_suffix(".tscn");
 
 func _ready() -> void:
 	self.add_child(self.server_handler);
